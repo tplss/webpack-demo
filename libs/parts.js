@@ -39,6 +39,20 @@ exports.devServer = function(options) {
   };
 }
 
+exports.setupJSX = function(paths) {
+  return {
+    module: {
+      loaders: [
+        {
+          test: /\.(js|jsx)$/,
+          loaders: ['babel-loader?cacheDirectory'],
+          include: paths
+        }
+      ]
+    }
+  };
+};
+
 exports.setupCSS = function(paths) {
   return {
     module: {
