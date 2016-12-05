@@ -30,11 +30,11 @@ const common = merge(
       path: PATHS.build,
       filename: '[name].js'
     },
-    /*plugins: [
+    plugins: [
       new HtmlWebpackPlugin({
         title: 'Webpack demo'
       })
-    ]*/
+    ]
   },
   parts.setupJSX(PATHS.app)
 );

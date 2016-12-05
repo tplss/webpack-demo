@@ -32,8 +32,9 @@ exports.devServer = function(options) {
     plugins: [
       // Enable multi-pass compilation for enhanced performance
       // in larger projects. Good default.
+      // XXX: Disabled for now due to https://github.com/webpack/webpack/issues/2985
       new webpack.HotModuleReplacementPlugin({
-        multiStep: true
+        //multiStep: true
       })
     ]
   };
