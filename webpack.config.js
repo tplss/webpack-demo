@@ -48,73 +48,16 @@ const common = merge([
 ]);
 
 module.exports = function(env) {
-  if (env === 'production') {
-    return merge([
-      common,
-      {
-        performance: {
-          hints: 'warning', // 'error' or false too
-          maxEntrypointSize: 200000, // in kB
-          maxAssetSize: 200000, // in kB
-        },
-        output: {
-          chunkFilename: 'scripts/[chunkhash].js',
-          filename: '[name].[chunkhash].js',
-        },
-        plugins: [
-          new webpack.HashedModuleIdsPlugin(),
-        ],
-        recordsPath: 'records.json',
-      },
-      parts.setFreeVariable(
-        'process.env.NODE_ENV',
-        'production'
-      ),
-      parts.clean(PATHS.build),
-      parts.minifyJavaScript({ useSourceMap: true }),
-      parts.extractBundles([
-        {
-          name: 'vendor',
-          entries: ['react', 'react-dom'],
-        },
-        {
-          name: 'manifest',
-        },
-      ]),
-      parts.generateSourceMaps('source-map'),
-      parts.lintJavaScript({ paths: PATHS.app }),
-      parts.extractCSS(),
-      parts.purifyCSS(
-        glob.sync(path.join(PATHS.app, '*'))
-      ),
-    ]);
-  }
-
   return merge([
     common,
     {
-      entry: {
-        // react-hot-loader has to run before app!
-        app: ['react-hot-loader/patch', PATHS.app],
-      },
       plugins: [
         new webpack.NamedModulesPlugin(),
       ],
     },
-    parts.generateSourceMaps('eval-source-map'),
-    parts.loadCSS(),
-    parts.devServer({
-      // Customize host/port here if needed
-      host: process.env.HOST,
-      port: process.env.PORT,
-    }),
-    parts.lintJavaScript({
-      paths: PATHS.app,
-      options: {
-        // Emit warnings over errors to avoid crashing
-        // HMR on error.
-        emitWarning: true,
-      },
-    }),
+    parts.clean(PATHS.build),
+    // enable/disable minification to trigger/hide bug
+    parts.minifyJavaScript({ useSourceMap: true }),
+    parts.generateSourceMaps('cheap-module-source-map'),
   ]);
 };
