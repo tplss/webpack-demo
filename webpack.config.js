@@ -27,6 +27,6 @@ module.exports = function() {
     parts.loadJavaScript(PATHS.app),
     // enable/disable minification to trigger/hide bug
     parts.minifyJavaScript({ useSourceMap: true }),
-    parts.generateSourceMaps('cheap-module-source-map'),
+    parts.generateSourceMaps('cheap-module-source-map'), // cheap-source-map works!
   ]);
 };
