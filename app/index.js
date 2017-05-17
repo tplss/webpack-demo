@@ -7,4 +7,8 @@ import { bake } from './shake';
 
 bake();
 
+if (process.env.NODE_ENV === 'development') {
+  require('./demo');
+}
+
 document.body.appendChild(component());
