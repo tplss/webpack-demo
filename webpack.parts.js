@@ -168,6 +168,21 @@ exports.loadJavaScript = ({ include, exclude }) => ({
   },
 });
 
+exports.loadVue = ({include, exclude}) => ({
+  module: {
+    rules: [
+      {
+        test: /\.vue$/,
+        include,
+        exclude,
+
+        loader: 'vue-loader',
+        options: {},
+      },
+    ],
+  },
+});
+
 exports.generateSourceMaps = ({ type }) => ({
   devtool: type,
 });

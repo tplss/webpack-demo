@@ -4,10 +4,12 @@ const merge = require('webpack-merge');
 const glob = require('glob');
 
 const parts = require('./webpack.parts');
-
+function resolve(dir) {
+  return path.join(__dirname, dir);
+}
 const PATHS = {
-  app: path.join(__dirname, 'app'),
-  build: path.join(__dirname, 'build'),
+  app: resolve('app'),
+  build: resolve('build'),
 };
 
 const commonConfig = merge([
@@ -15,6 +17,13 @@ const commonConfig = merge([
     output: {
       path: PATHS.build,
       filename: '[name].js',
+    },
+    resolve: {
+      extensions: ['.js', '.vue', '.json'],
+      alias: {
+        'vue$': 'vue/dist/vue.esm.js',
+        '@': resolve('app'),
+      },
     },
     resolveLoader: {
       alias: {
@@ -25,6 +34,7 @@ const commonConfig = merge([
     },
   },
   parts.lintJavaScript({ include: PATHS.app }),
+  parts.loadVue({include: PATHS.app}),
   parts.lintCSS({ include: PATHS.app }),
   parts.loadFonts({
     options: {
@@ -116,18 +126,11 @@ module.exports = (env) => {
   const pages = [
     parts.page({
       title: 'Webpack demo',
+      template: resolve('./app/index.html'),
       entry: {
-        app: PATHS.app,
+        app: path.join(PATHS.app, './main.js'),
       },
       chunks: ['app', 'manifest', 'vendor'],
-    }),
-    parts.page({
-      title: 'Another demo',
-      path: 'another',
-      entry: {
-        another: path.join(PATHS.app, 'another.js'),
-      },
-      chunks: ['another', 'manifest', 'vendor'],
     }),
   ];
   const config = env === 'production'
