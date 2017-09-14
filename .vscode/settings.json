@@ -1,0 +1,6 @@
+{
+  "files.autoSave": "onFocusChange",
+  "standard.enable": false,
+  "eslint.enable": true,
+  "eslint.autoFixOnSave": true
+}

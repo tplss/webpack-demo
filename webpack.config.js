@@ -130,9 +130,9 @@ module.exports = (env) => {
       chunks: ['another', 'manifest', 'vendor'],
     }),
   ];
-  const config = env === 'production' ?
-    productionConfig :
-    developmentConfig;
+  const config = env === 'production'
+    ? productionConfig
+    : developmentConfig;
 
   return merge([commonConfig, config].concat(pages));
 };
