@@ -15,16 +15,15 @@ npm run dev
 npm run build
 
 # build for production and view the bundle analyzer report
-npm run build --report
+npm run build --report # TODO
 
-# run unit tests
-npm run unit
+# lint
+npm run lint:js
+npm run lint:style
 
-# run e2e tests
-npm run e2e
-
-# run all tests
-npm test
+# run tests
+npm run test:jest
+npm run test:karma
 ```
 
 For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
