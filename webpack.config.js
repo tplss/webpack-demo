@@ -3,9 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const merge = require('webpack-merge')
 const webpack = require('webpack')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
-const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
-
-const pkg = require('./package.json')
+// const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
 
 const PATHS = {
   app: path.join(__dirname, 'app'),
@@ -95,7 +93,7 @@ const productionConfig = {
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': `"production"`
     }),
-    new UglifyJSPlugin(),
+    // new UglifyJSPlugin(),
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor',
       minChunks: isVendor
