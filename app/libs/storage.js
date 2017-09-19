@@ -1,12 +1,12 @@
 export default {
-  get: function(k) {
+  get: function (k) {
     try {
-      return JSON.parse(localStorage.getItem(k));
+      return JSON.parse(localStorage.getItem(k))
     } catch (e) {
-      return null;
+      return null
     }
   },
-  set: function(k, v) {
-    localStorage.setItem(k, JSON.stringify(v));
+  set: function (k, v) {
+    localStorage.setItem(k, JSON.stringify(v))
   }
-};
+}

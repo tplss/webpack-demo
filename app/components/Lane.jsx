@@ -1,29 +1,29 @@
-import React from "react";
-import { compose } from "redux";
-import { connect } from "react-redux";
-import { DropTarget } from "react-dnd";
-import Notes from "./Notes.jsx";
-import Editable from "./Editable.jsx";
-import ItemTypes from "../constants/itemTypes";
-import * as laneActions from "../actions/lanes";
-import * as noteActions from "../actions/notes";
+import React from 'react'
+import { compose } from 'redux'
+import { connect } from 'react-redux'
+import { DropTarget } from 'react-dnd'
+import Notes from './Notes.jsx'
+import Editable from './Editable.jsx'
+import ItemTypes from '../constants/itemTypes'
+import * as laneActions from '../actions/lanes'
+import * as noteActions from '../actions/notes'
 
 const noteTarget = {
-  hover(targetProps, monitor) {
-    const sourceProps = monitor.getItem();
-    const sourceId = sourceProps.id;
+  hover (targetProps, monitor) {
+    const sourceProps = monitor.getItem()
+    const sourceId = sourceProps.id
 
     if (!targetProps.lane.notes.length) {
-      targetProps.attachToLane(targetProps.lane.id, sourceId);
+      targetProps.attachToLane(targetProps.lane.id, sourceId)
     }
   }
-};
+}
 
 class Lane extends React.Component {
-  render() {
-    const props = this.props;
-    const { connectDropTarget, lane, laneNotes, className } = props;
-    const laneId = lane.id;
+  render () {
+    const props = this.props
+    const { connectDropTarget, lane, laneNotes, className } = props
+    const laneId = lane.id
 
     return connectDropTarget(
       <div className={className}>
@@ -52,34 +52,34 @@ class Lane extends React.Component {
           onDelete={(id, e) => this.deleteNote(laneId, id, e)}
         />
       </div>
-    );
+    )
   }
-  deleteLane(lane, e) {
-    e.stopPropagation();
+  deleteLane (lane, e) {
+    e.stopPropagation()
 
-    const laneId = lane.id;
+    const laneId = lane.id
 
     // Clean up notes
     lane.notes.forEach(noteId => {
-      this.props.detachFromLane(laneId, noteId);
-      this.props.deleteNote(noteId);
-    });
+      this.props.detachFromLane(laneId, noteId)
+      this.props.deleteNote(noteId)
+    })
 
-    this.props.deleteLane(laneId);
+    this.props.deleteLane(laneId)
   }
-  addNote(laneId, e) {
-    e.stopPropagation();
+  addNote (laneId, e) {
+    e.stopPropagation()
 
     const o = this.props.createNote({
-      task: "New task"
-    });
-    this.props.attachToLane(laneId, o.note.id);
+      task: 'New task'
+    })
+    this.props.attachToLane(laneId, o.note.id)
   }
-  deleteNote(laneId, noteId, e) {
-    e.stopPropagation();
+  deleteNote (laneId, noteId, e) {
+    e.stopPropagation()
 
-    this.props.detachFromLane(laneId, noteId);
-    this.props.deleteNote(noteId);
+    this.props.detachFromLane(laneId, noteId)
+    this.props.deleteNote(noteId)
   }
 }
 
@@ -100,4 +100,4 @@ export default compose(
   DropTarget(ItemTypes.NOTE, noteTarget, connect => ({
     connectDropTarget: connect.dropTarget()
   }))
-)(Lane);
+)(Lane)

@@ -1,54 +1,54 @@
-const path = require("path");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const merge = require("webpack-merge");
-const webpack = require("webpack");
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
-const UglifyJSPlugin = require("uglifyjs-webpack-plugin");
+const path = require('path')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const merge = require('webpack-merge')
+const webpack = require('webpack')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
 
-const pkg = require("./package.json");
+const pkg = require('./package.json')
 
 const PATHS = {
-  app: path.join(__dirname, "app"),
-  build: path.join(__dirname, "build")
-};
+  app: path.join(__dirname, 'app'),
+  build: path.join(__dirname, 'build')
+}
 
 const commonConfig = {
   entry: PATHS.app,
   resolve: {
-    extensions: [".js", ".jsx"]
+    extensions: ['.js', '.jsx']
   },
   output: {
     path: PATHS.build,
-    filename: "[name].js"
+    filename: '[name].js'
   },
   module: {
     rules: [
       {
         test: /\.(js|jsx)$/,
-        use: "babel-loader",
+        use: 'babel-loader',
         include: PATHS.app
       }
     ]
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: require("html-webpack-template"),
-      title: "Kanban app",
-      appMountId: "app",
+      template: require('html-webpack-template'),
+      title: 'Kanban app',
+      appMountId: 'app',
       inject: false
     })
   ]
-};
+}
 
 const developmentConfig = {
-  devtool: "eval-source-map",
+  devtool: 'eval-source-map',
   devServer: {
     historyApiFallback: true,
     hot: true,
     inline: true,
 
     // display only errors to reduce the amount of output
-    stats: "errors-only",
+    stats: 'errors-only',
 
     // parse host and port from env so this is easy
     // to customize
@@ -60,12 +60,12 @@ const developmentConfig = {
       // Define development specific CSS setup
       {
         test: /\.css$/,
-        use: ["style-loader", "css-loader"]
+        use: ['style-loader', 'css-loader']
       }
     ]
   },
   plugins: [new webpack.HotModuleReplacementPlugin()]
-};
+}
 
 const productionConfig = {
   entry: {
@@ -73,8 +73,8 @@ const productionConfig = {
   },
   output: {
     path: PATHS.build,
-    filename: "[name].[chunkhash].js",
-    chunkFilename: "[chunkhash].js"
+    filename: '[name].[chunkhash].js',
+    chunkFilename: '[chunkhash].js'
   },
   module: {
     rules: [
@@ -82,8 +82,8 @@ const productionConfig = {
       {
         test: /\.css$/,
         use: ExtractTextPlugin.extract({
-          fallback: "style-loader",
-          use: "css-loader"
+          fallback: 'style-loader',
+          use: 'css-loader'
         }),
         include: PATHS.app
       }
@@ -91,33 +91,33 @@ const productionConfig = {
   },
   plugins: [
     // Output extracted CSS to a file
-    new ExtractTextPlugin("styles.[contenthash].css"),
+    new ExtractTextPlugin('styles.[contenthash].css'),
     new webpack.DefinePlugin({
-      "process.env.NODE_ENV": `"production"`
+      'process.env.NODE_ENV': `"production"`
     }),
     new UglifyJSPlugin(),
     new webpack.optimize.CommonsChunkPlugin({
-      name: "vendor",
+      name: 'vendor',
       minChunks: isVendor
     }),
     new webpack.optimize.CommonsChunkPlugin({
-      name: "manifest"
+      name: 'manifest'
     })
   ]
-};
+}
 
-function isVendor({ resource }) {
+function isVendor ({ resource }) {
   return (
-    resource && resource.indexOf("node_modules") >= 0 && resource.match(/\.js$/)
-  );
+    resource && resource.indexOf('node_modules') >= 0 && resource.match(/\.js$/)
+  )
 }
 
 module.exports = env => {
-  process.env.BABEL_ENV = env;
+  process.env.BABEL_ENV = env
 
-  if (env === "development") {
-    return merge(commonConfig, developmentConfig);
+  if (env === 'development') {
+    return merge(commonConfig, developmentConfig)
   }
 
-  return merge(commonConfig, productionConfig);
-};
+  return merge(commonConfig, productionConfig)
+}

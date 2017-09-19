@@ -1,14 +1,14 @@
-import React from "react";
+import React from 'react'
 
 export default class Editable extends React.Component {
-  render() {
-    const { value, onEdit, onValueClick, editing, className } = this.props;
+  render () {
+    const { value, onEdit, onValueClick, editing, className } = this.props
 
     return (
       <div className={className}>
         {editing ? this.renderEdit() : this.renderValue()}
       </div>
-    );
+    )
   }
   renderEdit = () => {
     return (
@@ -20,35 +20,35 @@ export default class Editable extends React.Component {
         onBlur={this.finishEdit}
         onKeyPress={this.checkEnter}
       />
-    );
+    )
   };
   renderValue = () => {
-    const onDelete = this.props.onDelete;
+    const onDelete = this.props.onDelete
 
     return (
       <div onClick={this.props.onValueClick}>
         <span className="value">{this.props.value}</span>
         {onDelete ? this.renderDelete() : null}
       </div>
-    );
+    )
   };
   renderDelete = () => {
     return (
       <button className="delete" onClick={this.props.onDelete}>
         x
       </button>
-    );
+    )
   };
   checkEnter = e => {
-    if (e.key === "Enter") {
-      this.finishEdit(e);
+    if (e.key === 'Enter') {
+      this.finishEdit(e)
     }
   };
   finishEdit = e => {
-    const value = e.target.value;
+    const value = e.target.value
 
     if (this.props.onEdit && value.trim()) {
-      this.props.onEdit(value);
+      this.props.onEdit(value)
     }
   };
 }

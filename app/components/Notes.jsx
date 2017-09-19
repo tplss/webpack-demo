@@ -1,8 +1,8 @@
-import React from "react";
-import { connect } from "react-redux";
-import Editable from "./Editable.jsx";
-import Note from "./Note.jsx";
-import { move } from "../actions/lanes";
+import React from 'react'
+import { connect } from 'react-redux'
+import Editable from './Editable.jsx'
+import Note from './Note.jsx'
+import { move } from '../actions/lanes'
 
 const Notes = ({ notes, move, onValueClick, onEdit, onDelete }) => (
   <ul className="notes">
@@ -24,8 +24,8 @@ const Notes = ({ notes, move, onValueClick, onEdit, onDelete }) => (
       </Note>
     ))}
   </ul>
-);
+)
 
 export default connect(() => ({}), {
   move
-})(Notes);
+})(Notes)

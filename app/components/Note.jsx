@@ -1,33 +1,33 @@
-import React from "react";
-import { compose } from "redux";
-import { DragSource, DropTarget } from "react-dnd";
-import ItemTypes from "../constants/itemTypes";
+import React from 'react'
+import { compose } from 'redux'
+import { DragSource, DropTarget } from 'react-dnd'
+import ItemTypes from '../constants/itemTypes'
 
 const noteSource = {
-  beginDrag(props) {
+  beginDrag (props) {
     return {
       id: props.id
-    };
+    }
   },
-  isDragging(props, monitor) {
-    return props.id === monitor.getItem().id;
+  isDragging (props, monitor) {
+    return props.id === monitor.getItem().id
   }
-};
+}
 
 const noteTarget = {
-  hover(targetProps, monitor) {
-    const targetId = targetProps.id;
-    const sourceProps = monitor.getItem();
-    const sourceId = sourceProps.id;
+  hover (targetProps, monitor) {
+    const targetId = targetProps.id
+    const sourceProps = monitor.getItem()
+    const sourceId = sourceProps.id
 
     if (sourceId !== targetId) {
-      targetProps.onMove({ sourceId, targetId });
+      targetProps.onMove({ sourceId, targetId })
     }
   }
-};
+}
 
 class Note extends React.Component {
-  render() {
+  render () {
     const {
       connectDragSource,
       connectDropTarget,
@@ -36,9 +36,9 @@ class Note extends React.Component {
       id,
       editing,
       ...props
-    } = this.props;
+    } = this.props
     // Pass through if we are editing
-    const dragSource = editing ? a => a : connectDragSource;
+    const dragSource = editing ? a => a : connectDragSource
 
     return dragSource(
       connectDropTarget(
@@ -51,7 +51,7 @@ class Note extends React.Component {
           {props.children}
         </li>
       )
-    );
+    )
   }
 }
 
@@ -63,4 +63,4 @@ export default compose(
   DropTarget(ItemTypes.NOTE, noteTarget, connect => ({
     connectDropTarget: connect.dropTarget()
   }))
-)(Note);
+)(Note)
