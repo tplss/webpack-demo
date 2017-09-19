@@ -1,3 +1,29 @@
-# "Webpack - The React Parts" - Demo
+# webpack-demo for react.
 
-This is a demonstration related to [Webpack - The React Parts](https://presentations.survivejs.com/webpack-the-react-parts/) presentation. Walk through the tags to see the changes made across the presentation.
+## Usage
+
+```bash
+
+# build
+npm run build
+
+# development
+npm run start
+
+# lint
+npm run lint:js
+npm run lint:style
+```
+
+## Supporting
+
++ HMR
++ tree-shaking
++ ES6+
++ purify-css
++ ESLint
++ stylelint
+
+## License
+
+MIT.
