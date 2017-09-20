@@ -1,4 +1,4 @@
-# webpack-demo for react.
+# webpack-demo for vue.
 
 ## Usage
 
@@ -12,7 +12,7 @@ npm run start
 
 # lint
 npm run lint:js
-npm run lint:style
+npm run lint:style  #todo
 ```
 
 ## Supporting
@@ -20,9 +20,9 @@ npm run lint:style
 + HMR
 + tree-shaking
 + ES6+
-+ purify-css
++ purify-css #todo
 + ESLint
-+ stylelint
++ stylelint #todo
 
 ## License
 

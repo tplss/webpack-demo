@@ -11,12 +11,16 @@ const PATHS = {
 }
 
 const commonConfig = {
-  entry: PATHS.app,
+  entry: `${PATHS.app}/main.js`,
   resolve: {
-    extensions: ['.js', '.jsx']
+    extensions: ['.js', '.jsx', '.json', '.vue'],
+    alias: {
+      'vue$': 'vue/dist/vue.esm.js',
+      '@': PATHS.app
+    }
   },
   output: {
-    path: PATHS.build,
+    path: path.join(PATHS.build, './main.js'),
     filename: '[name].js'
   },
   module: {
@@ -25,6 +29,34 @@ const commonConfig = {
         test: /\.(js|jsx)$/,
         use: 'babel-loader',
         include: PATHS.app
+      },
+      {
+        test: /\.vue$/,
+        loader: 'vue-loader'
+      },
+      {
+        test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
+        loader: 'url-loader',
+        options: {
+          limit: 10000,
+          name: path.join(PATHS.build, 'img/[name].[hash:7].[ext]')
+        }
+      },
+      {
+        test: /\.(mp4|webm|ogg|mp3|wav|flac|aac)(\?.*)?$/,
+        loader: 'url-loader',
+        options: {
+          limit: 10000,
+          name: path.join(PATHS.build, 'media/[name].[hash:7].[ext]')
+        }
+      },
+      {
+        test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
+        loader: 'url-loader',
+        options: {
+          limit: 10000,
+          name: path.join(PATHS.build, 'fonts/[name].[hash:7].[ext]')
+        }
       }
     ]
   },
@@ -66,9 +98,6 @@ const developmentConfig = {
 }
 
 const productionConfig = {
-  entry: {
-    app: PATHS.app
-  },
   output: {
     path: PATHS.build,
     filename: '[name].[chunkhash].js',
